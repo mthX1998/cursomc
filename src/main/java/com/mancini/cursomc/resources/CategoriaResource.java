@@ -20,10 +20,13 @@ public class CategoriaResource {
 		
 		Categoria cat2 = new Categoria (2,"Escritório");
 		
+		Categoria cat3 = new Categoria (3,"Eletrodomésticos");
+		
 		List<Categoria> lista = new ArrayList<>();
 		
 		lista.add(cat1);
 		lista.add(cat2);
+		lista.add(cat3);
 		
 		return lista;
 	}
