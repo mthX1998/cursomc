@@ -13,6 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -35,7 +36,8 @@ public class Produto implements Serializable{
 	private List<Categoria> categorias = new ArrayList<>();
 	
 	
-	
+	@JsonManagedReference
+	@ManyToMany(mappedBy="itens")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
     public Produto(){

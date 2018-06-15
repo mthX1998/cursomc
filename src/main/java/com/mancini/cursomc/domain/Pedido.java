@@ -11,8 +11,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 @Entity
@@ -36,7 +40,12 @@ public class Pedido implements Serializable {
     private Endereco enderecoDeEntrega;
     
 
-    
+    @JsonBackReference
+	@ManyToMany
+	@JoinTable(name="PRODUTO_PEDIDO",
+	joinColumns = @JoinColumn(name="produto_id"),
+	inverseJoinColumns = @JoinColumn(name="pedido_id")	
+	)
     private List<Produto> itens = new ArrayList<>();
     
     public Pedido() {
@@ -44,15 +53,12 @@ public class Pedido implements Serializable {
     }
 
 
-	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega, Pagamento pagamento,
-			List<Produto> itens) {
+	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
 		super();
 		this.id = id;
 		this.instante = instante;
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
-		this.pagamento = pagamento;
-		this.itens = itens;
 	}
 
 
