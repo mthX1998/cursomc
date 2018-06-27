@@ -22,7 +22,7 @@ public enum EstadoPagamento {
 		return desc;
 	}
 	
-	public static EstadoPagamento EstadoPagamentotoEnum(Integer cod) {
+	public static EstadoPagamento toEnum(Integer cod) {
 		
 		if (cod == null) {
 			return null;

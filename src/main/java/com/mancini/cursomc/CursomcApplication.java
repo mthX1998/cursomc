@@ -13,6 +13,7 @@ import com.mancini.cursomc.domain.Cidade;
 import com.mancini.cursomc.domain.Cliente;
 import com.mancini.cursomc.domain.Endereco;
 import com.mancini.cursomc.domain.Estado;
+import com.mancini.cursomc.domain.ItemPedido;
 import com.mancini.cursomc.domain.Pagamento;
 import com.mancini.cursomc.domain.PagamentoComBoleto;
 import com.mancini.cursomc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.mancini.cursomc.repositories.CidadeRepository;
 import com.mancini.cursomc.repositories.ClienteRepository;
 import com.mancini.cursomc.repositories.EnderecoRepository;
 import com.mancini.cursomc.repositories.EstadoRepository;
+import com.mancini.cursomc.repositories.ItemPedidoRepository;
 import com.mancini.cursomc.repositories.PagamentoRepository;
 import com.mancini.cursomc.repositories.PedidoRepository;
 import com.mancini.cursomc.repositories.ProdutoRepository;
@@ -56,6 +58,9 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itempedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -115,16 +120,36 @@ public class CursomcApplication implements CommandLineRunner {
 	   
 	   ped1.setPagamento(pagto1);
 	   
-	   Pagamento pagto2 = new PagamentoComBoleto(null,EstadoPagamento.PENDENTE,ped2, sdf.parse("20/10/2017 00:00"));
+	   Pagamento pagto2 = new PagamentoComBoleto(null,EstadoPagamento.PENDENTE,ped2, sdf.parse("20/10/2017 00:00"),null);
 	   
 	   ped2.setPagamento(pagto2);
 	   
-	   cli1.getPedidos().addAll(Arrays.asList(ped1));
+	   cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
 	   
-	   cli1.getPedidos().addAll(Arrays.asList(ped2));
 	   
 	   pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 	   pagamentoRepository.saveAll(Arrays.asList(pagto1,pagto2));
+	   
+	   
+	   ItemPedido ip1 = new ItemPedido(ped1,p1,0.00,1,2000.00);
+	   
+	   ItemPedido ip2 = new ItemPedido(ped1,p3,0.00,2,80.00);
+	   
+	   ItemPedido ip3 = new ItemPedido(ped2,p2,100.00,1,800.00);
+	   
+	   ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+	   
+	   ped2.getItens().addAll(Arrays.asList(ip3));
+	   
+	   p1.getItens().addAll(Arrays.asList(ip1));
+	   
+	   p2.getItens().addAll(Arrays.asList(ip3));
+	   
+	   p3.getItens().addAll(Arrays.asList(ip2));
+	   
+	   
+	   itempedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
+	   
 	   
 	   
 	}
