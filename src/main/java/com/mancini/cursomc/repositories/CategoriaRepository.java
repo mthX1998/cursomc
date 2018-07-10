@@ -11,5 +11,6 @@ import com.mancini.cursomc.domain.Categoria;
 public interface CategoriaRepository extends JpaRepository <Categoria, Integer>{
 
 	Optional<Categoria> findById(Integer id);
+	
      
 }
